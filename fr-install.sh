@@ -50,10 +50,11 @@ docker run -it --rm --gpus=all ubuntu nvidia-smi
 #-----------------------------------
 # now we begin the paravision and FR-service installation
 #-----------------------------------
-#download our docker-compose files, cpu and gpu
-#login to docker so we have access to paravision stuff
-#cd to the compose directory
-#docker compose up -d 
+git clone https://github.com/brightblade42/compose-fr.git
+cd compose-fr/gpu
+docker login -u eyemetricfr -p 19darkangel84
+docker-compose --env-file=../.env up -d
+
 
 
 
