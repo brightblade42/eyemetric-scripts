@@ -3,6 +3,8 @@
 #mkdir ./eyemetric-fr
 #git clone https://github.com/brightblade42/fr-compose-v2 eyemetric-fr
 
+datadb_ver="v0.91" #this may become a problem. seems easy to go out of sync. 
+
 show_usage() {
 	echo "This is the beginning of the Eyemetric-fr install script"
 	exit 1
@@ -53,16 +55,21 @@ docker run -it --rm --gpus=all ubuntu nvidia-smi
 git clone https://github.com/brightblade42/compose-fr.git
 cd compose-fr/gpu
 docker login -u eyemetricfr -p 19darkangel84
+
+#run the dbvol container, copy out the tar files, unpack them to the /var/lib/docker/volumes directory with names
+#that match what docker expects for our actual containers
+# gpu_pvdb-data, gpu_safr-db
+dvol=/var/lib/docker/volumes
+docker run -d --rm --name dbdata eyemetricfr/dbdata:$datadb_ver
+docker cp dbdata:/safr_pgdata.gz.tar $dvol 
+tar -xsvf $dvol/safr_pgdata.gz.tar -C $dvol
+mv $dvol/safr_pgdata $dvol/gpu_safr-db
+docker cp dbdata:/pvdb_pgdata.gz.tar $dvol
+tar -xsvf $dvol/pvdb_pgdata.gz.tar -C $dvol
+mv $dvol/pvdb_pgdata $dvol/gpu_pv-data
+rm -r $dvol/*.tar
+ 
+docker stop dbdata
+
 docker-compose --env-file=../.env up -d
-
-
-
-
-
-
-
-
-
-
-
 
