@@ -70,6 +70,6 @@ mv $dvol/pvdb_pgdata $dvol/gpu_pv-data
 rm -r $dvol/*.tar
  
 docker stop dbdata
-
-docker-compose --env-file=../.env up -d
+#hold up on running, we need to change some env vars first
+#docker-compose --env-file=../.env up -d
 
