@@ -3,7 +3,7 @@
 #mkdir ./eyemetric-fr
 #git clone https://github.com/brightblade42/fr-compose-v2 eyemetric-fr
 
-datadb_ver="v0.91" #this may become a problem. seems easy to go out of sync. 
+datadb_ver="v0.92" #this may become a problem. seems easy to go out of sync. 
 
 show_usage() {
 	echo "This is the beginning of the Eyemetric-fr install script"
